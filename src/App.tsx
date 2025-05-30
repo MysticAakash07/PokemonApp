@@ -26,7 +26,6 @@ function App() {
             <Route element={<Pokemon />} path="/pokemon"></Route>
             <Route element={<Navigate to="/pokemon/1" />} path="*"></Route>
           </Routes>
-          <Wrapper />
           <Footer />
         </div>
       </BrowserRouter>

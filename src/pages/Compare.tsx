@@ -1,5 +1,7 @@
+import Wrapper from "../sections/Wrapper"
+
 function Compare() {
   return <div>Compare</div>
 }
 
-export default Compare
+export default Wrapper(Compare)
