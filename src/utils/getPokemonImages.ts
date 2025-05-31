@@ -1,24 +1,24 @@
-// @ts-nocheck
+// getPokemonImages.ts
+export const importImages = (imageGlob: Record<string, any>) => {
+  const images: Record<string, string> = {}
 
-const fetchImages = (context: string) => {
-  const images = {}
-  const cache = {}
-  function importAll(r) {
-    r.keys().forEach(key => (cache[key] = r(key)))
+  for (const path in imageGlob) {
+    const fileName = path.split("/").pop()?.split(".")[0] || ""
+    images[fileName] = imageGlob[path].default
   }
-  importAll(context)
-  Object.entries(cache).forEach((module: string[]) => {
-    let key = module[0].split("")
-    key.splice(0, 2)
-    key.splice(-4, 4)
-    images[[key.join("")]] = module[1]
-  })
+
   return images
 }
 
-export const images = fetchImages(
-  require.context("../assets/pokemons/shiny", false, /\.(png|jpe?g|svg)$/),
+// Vite's import.meta.glob for default and shiny Pokémon images
+export const images = importImages(
+  import.meta.glob("../assets/pokemons/shiny/*.{png,jpg,jpeg,svg}", {
+    eager: true,
+  }),
 )
-export const defaultImages = fetchImages(
-  require.context("../assets/pokemons/default", false, /\.(png|jpe?g|svg)$/),
+
+export const defaultImages = importImages(
+  import.meta.glob("../assets/pokemons/default/*.{png,jpg,jpeg,svg}", {
+    eager: true,
+  }),
 )

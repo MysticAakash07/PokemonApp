@@ -19,10 +19,8 @@ export const getPokemonData = createAsyncThunk(
           }),
         )
 
-        // @ts-expect-error
         let image: string = images[data.id]
         if (!image) {
-          // @ts-expect-error
           image = defaultImages[data.id]
         }
 
@@ -35,6 +33,7 @@ export const getPokemonData = createAsyncThunk(
           })
         }
       }
+      return pokemonsData
     } catch (err) {
       console.log(err)
     }
