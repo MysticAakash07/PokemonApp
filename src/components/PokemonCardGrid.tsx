@@ -1,6 +1,13 @@
 import { pokemonTypeInterface, userPokemonsType } from "../utils/Types"
+import { IoGitCompare } from "react-icons/io5"
+import { FaPlus, FaTrash } from "react-icons/fa"
+import { useLocation, useNavigate } from "react-router-dom"
 
 function PokemonCardGrid({ pokemons }: { pokemons: userPokemonsType[] }) {
+  const location = useLocation()
+  const navigate = useNavigate()
+
+  console.log(pokemons);
   return (
     <div className="pokemon-card-grid-container">
       <div className="pokemon-card-grid">
@@ -8,14 +15,24 @@ function PokemonCardGrid({ pokemons }: { pokemons: userPokemonsType[] }) {
           pokemons.length > 0 &&
           pokemons?.map((data: userPokemonsType) => (
             <div className="pokemon-card" key={data.id}>
-              <div className="pokemon-card-list"></div>
-              <div className="pokemon-card-compare"></div>
+              <div className="pokemon-card-list">
+                {location.pathname.includes("/pokemon") ||
+                location.pathname.includes("/search") ? (
+                  <FaPlus className="plus" />
+                ) : (
+                  <FaTrash className="trash" />
+                )}
+              </div>
+              <div className="pokemon-card-compare">
+                <IoGitCompare />
+              </div>
               <h3 className="pokemon-card-title">{data.name}</h3>
               <img
                 src={data.image}
                 alt="pokemon image"
                 className="pokemon-card-image"
                 loading="lazy"
+                onClick={() => navigate(`/pokemon/${data.id}`)}
               />
               <div className="pokemon-card-types">
                 {data.types.map((type: pokemonTypeInterface, index: number) => {
