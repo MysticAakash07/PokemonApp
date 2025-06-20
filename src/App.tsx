@@ -43,7 +43,7 @@ function App() {
       <BrowserRouter>
         <div className="app">
           <Navbar />
-          <Routes>
+          <Routes >
             <Route element={<Search />} path="/search"></Route>
             <Route element={<MyList />} path="/list"></Route>
             <Route element={<About />} path="/about"></Route>

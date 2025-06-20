@@ -11,7 +11,6 @@ function PokemonCardGrid({ pokemons }: { pokemons: userPokemonsType[] }) {
   const navigate = useNavigate()
   const dispatch = useAppDispatch()
 
-  console.log(pokemons)
   return (
     <div className="pokemon-card-grid-container">
       <div className="pokemon-card-grid">
