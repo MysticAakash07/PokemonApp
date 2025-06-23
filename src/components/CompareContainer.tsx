@@ -1,3 +1,6 @@
+import { useNavigate } from "react-router-dom"
+import { useAppDispatch } from "../app/hooks"
+import { removeFromCompare } from "../app/slices/PokemonSlice"
 import { pokemonTypes } from "../utils/getPokemonTypes"
 import {
   userPokemonsType,
@@ -13,6 +16,8 @@ function CompareContainer({
   pokemon?: userPokemonsType
   isEmpty?: boolean
 }) {
+  const dispatch = useAppDispatch()
+  const navigate = useNavigate()
   const createStatsArray = (
     types: pokemonTypeInterface[] = [],
     statType: pokemonStatType,
@@ -47,6 +52,54 @@ function CompareContainer({
           <h4 className="pokemon-type-title">Strength</h4>
           <div className="pokemon-type-icons">
             {createStatsArray(pokemon?.types, "strength").map(
+              (stat: { image: string }, idx: number) => (
+                <div className="pokemon-type" key={idx}>
+                  <img
+                    src={stat.image}
+                    alt="Pokemon Type"
+                    className="pokemon-type-image"
+                  />
+                </div>
+              ),
+            )}
+          </div>
+        </div>
+        <div className="pokemon-types">
+          <h4 className="pokemon-type-title">Resistance</h4>
+          <div className="pokemon-type-icons">
+            {createStatsArray(pokemon?.types, "resistance").map(
+              (stat: { image: string }, idx: number) => (
+                <div className="pokemon-type" key={idx}>
+                  <img
+                    src={stat.image}
+                    alt="Pokemon Type"
+                    className="pokemon-type-image"
+                  />
+                </div>
+              ),
+            )}
+          </div>
+        </div>
+        <div className="pokemon-types">
+          <h4 className="pokemon-type-title">Vulnerable</h4>
+          <div className="pokemon-type-icons">
+            {createStatsArray(pokemon?.types, "vulnerable").map(
+              (stat: { image: string }, idx: number) => (
+                <div className="pokemon-type" key={idx}>
+                  <img
+                    src={stat.image}
+                    alt="Pokemon Type"
+                    className="pokemon-type-image"
+                  />
+                </div>
+              ),
+            )}
+          </div>
+        </div>
+        <div className="pokemon-types">
+          <h4 className="pokemon-type-title">Weakness</h4>
+          <div className="pokemon-type-icons">
+            {createStatsArray(pokemon?.types, "weakness").map(
               (stat: { image: string }, idx: number) => (
                 <div className="pokemon-type" key={idx}>
                   <img
@@ -108,8 +161,18 @@ function CompareContainer({
           </div>
           <div className="compare-actions-buttons">
             <button className="compare-btn">Add</button>
-            <button className="compare-btn">View</button>
-            <button className="compare-btn">Remove</button>
+            <button
+              className="compare-btn"
+              onClick={() => navigate(`/pokemon/${pokemon.id}`)}
+            >
+              View
+            </button>
+            <button
+              className="compare-btn"
+              onClick={() => dispatch(removeFromCompare({ id: pokemon.id }))}
+            >
+              Remove
+            </button>
           </div>
         </div>
       )}
