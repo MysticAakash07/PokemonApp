@@ -1,5 +1,4 @@
 import Navbar from "./sections/Navbar"
-import Wrapper from "./sections/Wrapper"
 import Footer from "./sections/Footer"
 import Background from "./components/Background"
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom"
@@ -13,12 +12,22 @@ import About from "./pages/About"
 import Compare from "./pages/Compare"
 import Pokemon from "./pages/Pokemon"
 import { useEffect } from "react"
-import { clearToasts } from "./app/slices/AppSlice"
+import { clearToasts, setUserStatus } from "./app/slices/AppSlice"
 import { useAppDispatch, useAppSelector } from "./app/hooks"
+import { onAuthStateChanged } from "firebase/auth"
+import { firebaseAuth } from "./utils/FirebaseConfig"
 
 function App() {
   const { toasts } = useAppSelector(({ app }) => app)
   const dispatch = useAppDispatch()
+
+  useEffect(() => {
+    onAuthStateChanged(firebaseAuth, currentUser => {
+      if (currentUser) {
+        dispatch(setUserStatus({ email: currentUser.email }))
+      }
+    })
+  }, [dispatch])
 
   useEffect(() => {
     if (toasts.length) {
@@ -43,7 +52,7 @@ function App() {
       <BrowserRouter>
         <div className="app">
           <Navbar />
-          <Routes >
+          <Routes>
             <Route element={<Search />} path="/search"></Route>
             <Route element={<MyList />} path="/list"></Route>
             <Route element={<About />} path="/about"></Route>
