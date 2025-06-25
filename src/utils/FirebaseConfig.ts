@@ -1,20 +1,16 @@
-// Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app"
 import { getAuth } from "firebase/auth"
 import { getFirestore, collection } from "firebase/firestore"
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
 
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+// Firebase config using environment variables
 const firebaseConfig = {
-  apiKey: "AIzaSyBK_tZCNnpcfImTh9Im6FzSZfytAjfFDGo",
-  authDomain: "pokemonapp-7c436.firebaseapp.com",
-  projectId: "pokemonapp-7c436",
-  storageBucket: "pokemonapp-7c436.firebasestorage.app",
-  messagingSenderId: "936379529277",
-  appId: "1:936379529277:web:8aee31964c3f89659d9254",
-  measurementId: "G-QK3Q7WWQ32",
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+  appId: import.meta.env.VITE_FIREBASE_APP_ID,
+  measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID,
 }
 
 // Initialize Firebase
