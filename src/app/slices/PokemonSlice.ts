@@ -6,12 +6,13 @@ import {
 import { getInitialPokemonData } from "../reducers/getInitialPokemonData"
 import { getPokemonData } from "../reducers/getPokemonData"
 import { getUserPokemons } from "../reducers/getUserPokemons"
+import { removePokemonFromUserList } from "../reducers/removePokemonFromUserList"
 
 const initialState: PokemonTypeInitialState = {
   allPokemon: undefined,
   randomPokemons: undefined,
   compareQueue: [],
-  userPokemons: []
+  userPokemons: [],
 }
 
 export const PokemonSlice = createSlice({
@@ -48,8 +49,25 @@ export const PokemonSlice = createSlice({
     builder.addCase(getPokemonData.fulfilled, (state, action) => {
       state.randomPokemons = action.payload
     })
-    builder.addCase(getUserPokemons.fulfilled, (state, action)=>{
+    builder.addCase(getUserPokemons.fulfilled, (state, action) => {
       state.userPokemons = action.payload!
+    })
+    builder.addCase(removePokemonFromUserList.fulfilled, (state, action) => {
+      if (!action.payload?.id) {
+        console.warn("No valid ID in removePokemonFromUserList payload")
+        return
+      }
+      const userPokemons = [...state.userPokemons]
+      const index = userPokemons.findIndex(
+        pokemon => pokemon.firebaseId === action.payload?.id,
+      )
+      if (index !== -1) {
+        console.log("Deleted pokeom")
+        state.userPokemons.splice(index, 1)
+      } else {
+        console.warn("Pokemon not found in userPokemons with that firebaseId")
+      }
+      state.userPokemons = userPokemons
     })
   },
 })

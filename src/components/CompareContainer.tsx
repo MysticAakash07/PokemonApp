@@ -8,6 +8,7 @@ import {
   pokemonStatType,
 } from "../utils/Types"
 import { FaPlus } from "react-icons/fa"
+import { addPokemonToList } from "../app/reducers/addPokemonToList"
 
 function CompareContainer({
   pokemon = undefined,
@@ -160,7 +161,12 @@ function CompareContainer({
             </div>
           </div>
           <div className="compare-actions-buttons">
-            <button className="compare-btn">Add</button>
+            <button
+              className="compare-btn"
+              onClick={() => dispatch(addPokemonToList(pokemon))}
+            >
+              Add
+            </button>
             <button
               className="compare-btn"
               onClick={() => navigate(`/pokemon/${pokemon.id}`)}
