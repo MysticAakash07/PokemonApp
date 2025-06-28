@@ -11,6 +11,8 @@
   &-image {
     height: 15rem;
     border-radius: 10px;
+    border: 0.3rem solid var(--accent-color);
+    padding: 1rem;
   }
 
   &-text {

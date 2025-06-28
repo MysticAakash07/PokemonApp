@@ -17,7 +17,6 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      border: none;
       background-color: var(--accent-color);
 
       svg {
@@ -75,10 +74,10 @@
         gap: 2rem;
         width: 100%;
 
-        .pokemon-type-title{
-            display: flex;
-            justify-content: flex-end;
-            align-items: center;
+        .pokemon-type-title {
+          display: flex;
+          justify-content: flex-end;
+          align-items: center;
         }
 
         .pokemon-type-icons {

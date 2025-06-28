@@ -57,8 +57,8 @@ function App() {
             <Route element={<MyList />} path="/list"></Route>
             <Route element={<About />} path="/about"></Route>
             <Route element={<Compare />} path="/compare"></Route>
-            <Route element={<Pokemon />} path="/pokemon"></Route>
-            {/* <Route element={<Navigate to="/pokemon/1" />} path="*"></Route> */}
+            <Route element={<Pokemon />} path="/pokemon/:id"></Route>
+            <Route element={<Navigate to="/pokemon/1" />} path="*"></Route>
           </Routes>
           <Footer />
           <ToastContainer />
