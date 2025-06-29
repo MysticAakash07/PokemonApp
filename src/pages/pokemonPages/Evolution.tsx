@@ -1,8 +1,26 @@
-import React from 'react'
+import { useEffect, useState } from "react"
+import { useAppDispatch, useAppSelector } from "../../app/hooks"
+import { getPokemonData } from "../../app/reducers/getPokemonData"
+import PokemonCardGrid from "../../components/PokemonCardGrid"
 
 function Evolution() {
+  const dispatch = useAppDispatch()
+  const [isLoaded, setIsLoaded] = useState(false)
+  const { currentPokemon, randomPokemons } = useAppSelector(
+    ({ pokemon }) => pokemon,
+  )
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const pokemons = currentPokemon?.evolution.map(({ pokemon }) => pokemon)
+      await dispatch(getPokemonData(pokemons!))
+      setIsLoaded(true)
+    }
+  }, [dispatch, currentPokemon])
   return (
-    <div>Evolution</div>
+    <div className="page">
+      {isLoaded && <PokemonCardGrid pokemons={randomPokemons!} />}
+    </div>
   )
 }
 
