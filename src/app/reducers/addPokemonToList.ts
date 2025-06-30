@@ -4,7 +4,7 @@ import {
   pokemonTypeInterface,
   userPokemonsType,
 } from "../../utils/Types"
-import { RootState } from "@reduxjs/toolkit/query"
+import { RootState } from "../store"
 import { setToast } from "../slices/AppSlice"
 import { addDoc } from "firebase/firestore"
 import { pokemonListRef } from "../../utils/FirebaseConfig"
@@ -17,7 +17,7 @@ export const addPokemonToList = createAsyncThunk(
       id: number
       name: string
       types: pokemonTypeInterface[] | string[]
-      stats?: pokemonStatsType
+      stats?: pokemonStatsType[]
     },
     { getState, dispatch },
   ) => {
