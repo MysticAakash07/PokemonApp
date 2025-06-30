@@ -6,16 +6,19 @@ import { ToastContainer, ToastOptions, toast } from "react-toastify"
 import "react-toastify/ReactToastify.css"
 
 import "./scss/index.scss"
-import Search from "./pages/Search"
-import MyList from "./pages/MyList"
-import About from "./pages/About"
-import Compare from "./pages/Compare"
-import Pokemon from "./pages/Pokemon"
-import { useEffect } from "react"
+
+import { lazy, Suspense, useEffect } from "react"
 import { clearToasts, setUserStatus } from "./app/slices/AppSlice"
 import { useAppDispatch, useAppSelector } from "./app/hooks"
 import { onAuthStateChanged } from "firebase/auth"
 import { firebaseAuth } from "./utils/FirebaseConfig"
+import Loader from "./components/Loader"
+
+const Search = lazy(() => import("./pages/Search"))
+const MyList = lazy(() => import("./pages/MyList"))
+const About = lazy(() => import("./pages/About"))
+const Compare = lazy(() => import("./pages/Compare"))
+const Pokemon = lazy(() => import("./pages/Pokemon"))
 
 function App() {
   const { toasts } = useAppSelector(({ app }) => app)
@@ -50,19 +53,21 @@ function App() {
     <div className="main-container">
       <Background />
       <BrowserRouter>
-        <div className="app">
-          <Navbar />
-          <Routes>
-            <Route element={<Search />} path="/search"></Route>
-            <Route element={<MyList />} path="/list"></Route>
-            <Route element={<About />} path="/about"></Route>
-            <Route element={<Compare />} path="/compare"></Route>
-            <Route element={<Pokemon />} path="/pokemon/:id"></Route>
-            <Route element={<Navigate to="/pokemon/1" />} path="*"></Route>
-          </Routes>
-          <Footer />
-          <ToastContainer />
-        </div>
+        <Suspense fallback={<Loader />}>
+          <div className="app">
+            <Navbar />
+            <Routes>
+              <Route element={<Search />} path="/search"></Route>
+              <Route element={<MyList />} path="/list"></Route>
+              <Route element={<About />} path="/about"></Route>
+              <Route element={<Compare />} path="/compare"></Route>
+              <Route element={<Pokemon />} path="/pokemon/:id"></Route>
+              <Route element={<Navigate to="/pokemon/1" />} path="*"></Route>
+            </Routes>
+            <Footer />
+            <ToastContainer />
+          </div>
+        </Suspense>
       </BrowserRouter>
     </div>
   )

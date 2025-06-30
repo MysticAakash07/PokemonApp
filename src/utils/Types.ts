@@ -21,6 +21,7 @@ export interface currentPokemonType {
   encounters: string[]
   evolution: { level: number; pokemon: { name: string; url: string } }[]
   pokemonAbilities: { abilities: string[]; moves: string[] }
+  evolutionLevel: number
 }
 
 export interface genericPokemonType {
