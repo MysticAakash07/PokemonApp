@@ -136,7 +136,7 @@ function Pokemon() {
       pixels: 10000,
       distance: 1,
       splitPower: 10,
-      colorValidator: (red: number, green: number, blue: number, alpha = 255) =>
+      colorValidator: (_red: number, _green: number, _blue: number, alpha = 255) =>
         alpha > 250,
       saturationDistance: 0.2,
       lightnessDistance: 0.2,

@@ -46,13 +46,20 @@ function CompareContainer({
   }
 
   const getStats = () => {
+    const normalizedTypes: pokemonTypeInterface[] = Array.isArray(
+      pokemon?.types,
+    )
+      ? pokemon.types
+      : pokemon?.types
+        ? [pokemon.types]
+        : []
     if (!pokemon?.types) return null
     return (
       <>
         <div className="pokemon-types">
           <h4 className="pokemon-type-title">Strength</h4>
           <div className="pokemon-type-icons">
-            {createStatsArray(pokemon?.types, "strength").map(
+            {createStatsArray(normalizedTypes, "strength").map(
               (stat: { image: string }, idx: number) => (
                 <div className="pokemon-type" key={idx}>
                   <img
@@ -68,7 +75,7 @@ function CompareContainer({
         <div className="pokemon-types">
           <h4 className="pokemon-type-title">Resistance</h4>
           <div className="pokemon-type-icons">
-            {createStatsArray(pokemon?.types, "resistance").map(
+            {createStatsArray(normalizedTypes, "resistance").map(
               (stat: { image: string }, idx: number) => (
                 <div className="pokemon-type" key={idx}>
                   <img
@@ -84,7 +91,7 @@ function CompareContainer({
         <div className="pokemon-types">
           <h4 className="pokemon-type-title">Vulnerable</h4>
           <div className="pokemon-type-icons">
-            {createStatsArray(pokemon?.types, "vulnerable").map(
+            {createStatsArray(normalizedTypes, "vulnerable").map(
               (stat: { image: string }, idx: number) => (
                 <div className="pokemon-type" key={idx}>
                   <img
@@ -100,7 +107,7 @@ function CompareContainer({
         <div className="pokemon-types">
           <h4 className="pokemon-type-title">Weakness</h4>
           <div className="pokemon-type-icons">
-            {createStatsArray(pokemon?.types, "weakness").map(
+            {createStatsArray(normalizedTypes, "weakness").map(
               (stat: { image: string }, idx: number) => (
                 <div className="pokemon-type" key={idx}>
                   <img
@@ -141,20 +148,21 @@ function CompareContainer({
               <div className="pokemon-types">
                 <h4 className="pokemon-type-title">Type</h4>
                 <div className="pokemon-type-icons">
-                  {pokemon?.types.map(
-                    (type: pokemonTypeInterface, index: number) => {
-                      const keys = Object.keys(type)
-                      return (
-                        <div className="pokemon-type" key={index}>
-                          <img
-                            src={type[keys[0]].image}
-                            alt="pokemon type"
-                            className="pokemon-type-image"
-                          />
-                        </div>
-                      )
-                    },
-                  )}
+                  {(Array.isArray(pokemon?.types)
+                    ? pokemon?.types
+                    : [pokemon?.types]
+                  ).map((type: pokemonTypeInterface, index: number) => {
+                    const keys = Object.keys(type)
+                    return (
+                      <div className="pokemon-type" key={index}>
+                        <img
+                          src={type[keys[0]].image}
+                          alt="pokemon type"
+                          className="pokemon-type-image"
+                        />
+                      </div>
+                    )
+                  })}
                 </div>
               </div>
               {getStats()}
@@ -163,7 +171,16 @@ function CompareContainer({
           <div className="compare-actions-buttons">
             <button
               className="compare-btn"
-              onClick={() => dispatch(addPokemonToList(pokemon))}
+              onClick={() =>
+                dispatch(
+                  addPokemonToList({
+                    ...pokemon,
+                    types: Array.isArray(pokemon.types)
+                      ? pokemon.types
+                      : [pokemon.types],
+                  }),
+                )
+              }
             >
               Add
             </button>

@@ -26,7 +26,16 @@ function PokemonCardGrid({ pokemons }: { pokemons: userPokemonsType[] }) {
                 location.pathname.includes("/search") ? (
                   <FaPlus
                     className="plus"
-                    onClick={() => dispatch(addPokemonToList(data))}
+                    onClick={() =>
+                      dispatch(
+                        addPokemonToList({
+                          ...data,
+                          types: Array.isArray(data.types)
+                            ? data.types
+                            : [data.types],
+                        }),
+                      )
+                    }
                   />
                 ) : (
                   <FaTrash
@@ -61,22 +70,24 @@ function PokemonCardGrid({ pokemons }: { pokemons: userPokemonsType[] }) {
                 }}
               />
               <div className="pokemon-card-types">
-                {data.types.map((type: pokemonTypeInterface, index: number) => {
-                  const keys = Object.keys(type)
-                  return (
-                    <div className="pokemon-card-types-type" key={index}>
-                      <img
-                        src={type[keys[0]].image}
-                        alt="pokemon type"
-                        className="pokemon-card-types-type-image"
-                        loading="lazy"
-                      />
-                      <h6 className="pokemon-card-types-type-text">
-                        {keys[0]}
-                      </h6>
-                    </div>
-                  )
-                })}
+                {(Array.isArray(data.types) ? data.types : [data.types]).map(
+                  (type: pokemonTypeInterface, index: number) => {
+                    const keys = Object.keys(type)
+                    return (
+                      <div className="pokemon-card-types-type" key={index}>
+                        <img
+                          src={type[keys[0]].image}
+                          alt="pokemon type"
+                          className="pokemon-card-types-type-image"
+                          loading="lazy"
+                        />
+                        <h6 className="pokemon-card-types-type-text">
+                          {keys[0]}
+                        </h6>
+                      </div>
+                    )
+                  },
+                )}
               </div>
             </div>
           ))}

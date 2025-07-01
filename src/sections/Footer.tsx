@@ -4,7 +4,7 @@ import { firebaseAuth } from "../utils/FirebaseConfig"
 import { useAppDispatch, useAppSelector } from "../app/hooks"
 import { setPokemonTab, setToast, setUserStatus } from "../app/slices/AppSlice"
 import { pokemonTabs } from "../utils/Constants"
-import { useLocation, useNavigate } from "react-router-dom"
+import { useLocation } from "react-router-dom"
 
 function Footer() {
   const dispatch = useAppDispatch()

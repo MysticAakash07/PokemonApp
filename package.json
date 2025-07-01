@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "build": "tsc -b && vite build",
+    "deploy": "netlify deploy --dir=dist --prod",
     "dev": "vite",
     "format:check": "prettier --check .",
     "format": "prettier --write .",
@@ -46,6 +47,7 @@
     "eslint-plugin-react-hooks": "^5.2.0",
     "globals": "^16.0.0",
     "jsdom": "^26.0.0",
+    "netlify-cli": "^22.2.1",
     "prettier": "^3.5.3",
     "typescript": "^5.8.2",
     "typescript-eslint": "^8.29.0",

@@ -8,7 +8,7 @@ import { pokemonTypes } from "../../utils/getPokemonTypes"
 
 export const getUserPokemons = createAsyncThunk(
   "pokemon/userList",
-  async (args, { getState }) => {
+  async (_args, { getState }) => {
     try {
       const {
         app: { userInfo },
