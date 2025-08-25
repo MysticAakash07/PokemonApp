@@ -62,7 +62,14 @@ function App() {
               <Route element={<About />} path="/about"></Route>
               <Route element={<Compare />} path="/compare"></Route>
               <Route element={<Pokemon />} path="/pokemon/:id"></Route>
-              <Route element={<Navigate to="/pokemon/1" />} path="*"></Route>
+              <Route
+                path="*"
+                element={
+                  <Navigate
+                    to={`/pokemon/${localStorage.getItem("lastViewedPokemon") || 1}`}
+                  />
+                }
+              />
             </Routes>
             <Footer />
             <ToastContainer />

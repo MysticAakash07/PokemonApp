@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom"
 import { useAppDispatch, useAppSelector } from "../app/hooks"
 import axios from "axios"
 import {
+  getOppositeColor,
   pokemonRoute,
   pokemonSpeciesRoute,
   pokemonTabs,
@@ -123,7 +124,9 @@ function Pokemon() {
   )
 
   useEffect(() => {
-    console.log("Inside UseEffect")
+    if (params.id) {
+      localStorage.setItem("lastViewedPokemon", params.id)
+    }
     const imageElemet = document.createElement("img")
     // @ts-ignore
     imageElemet.src = images[params.id]
@@ -136,8 +139,12 @@ function Pokemon() {
       pixels: 10000,
       distance: 1,
       splitPower: 10,
-      colorValidator: (_red: number, _green: number, _blue: number, alpha = 255) =>
-        alpha > 250,
+      colorValidator: (
+        _red: number,
+        _green: number,
+        _blue: number,
+        alpha = 255,
+      ) => alpha > 250,
       saturationDistance: 0.2,
       lightnessDistance: 0.2,
       hueDistance: 0.083333333,
@@ -146,10 +153,11 @@ function Pokemon() {
     const getColor = async () => {
       const color = await extractColors(imageElemet.src, options)
       const hex = color[0].hex.split('"')[0]
+      const oppoHex = getOppositeColor(hex)
+
       const root = document.documentElement
       root.style.setProperty("--accent-color", hex)
-
-      console.log("Extracted Accent Color:", hex)
+      root.style.setProperty("--accent-oppo-color", oppoHex)
     }
 
     getColor()

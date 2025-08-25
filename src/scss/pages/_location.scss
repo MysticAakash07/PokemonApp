@@ -5,8 +5,8 @@
     list-style-image: none;
     color: white;
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    grid-auto-rows: 150px;
+    grid-template-columns: repeat(5, 1fr);
+    grid-auto-rows: 100px;
     gap: 1rem;
     padding: 1rem;
     width: 100%;
@@ -15,13 +15,20 @@
     .pokemon-location {
       height: 100%;
       padding: 2rem;
-      font-size: x-large;
+      font-size: large;
       background-color: rgba(255, 255, 255, 0.125);
       border-radius: 1rem;
       display: flex;
       justify-content: center;
       align-items: center;
-      cursor: pointer;
+      cursor: text;
+      transition: all 0.25s ease-in-out;
+      
+      &:hover {
+        transform: scale(1.03);
+        background: rgba(255, 255, 255, 0.15);
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+      }
     }
   }
 }
